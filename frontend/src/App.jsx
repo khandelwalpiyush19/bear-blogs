@@ -6,7 +6,12 @@ import ContactUsPage from './pages/Contact';
 import SignUpPage from './components/auth/SignUp';
 import LoginPage from './components/auth/Login';
 import AllBlogsPage from './pages/AllBlogs';
-import Dashboard from './pages/Dashboard';
+import DashboardLayout from './pages/Dashboard';
+import DashboardContent from './components/dashboard/DashboardContent';
+import CreateBlog from './components/dashboard/CreateBlog';
+import UpdateBlogs from './components/dashboard/UpdateBlogs';
+import Profile from './components/dashboard/Profile';
+import MyBlogs from './components/dashboard/MyBlogs';
 function App() {
 
   return (
@@ -19,7 +24,13 @@ function App() {
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/signup" element={<SignUpPage/>} /> 
         <Route path="/login" element={<LoginPage/>} /> 
-        <Route path="/dashboard" element={<Dashboard/>} /> 
+        <Route path="/dashboard" element={<DashboardLayout/>}>
+          <Route index element={<DashboardContent />} />
+          <Route path="create" element={<CreateBlog />} />
+          <Route path="myblogs" element={<MyBlogs />} />
+          <Route path="update" element={<UpdateBlogs />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
         <Route path="*" element={<h1>404 Not Found</h1>} />
         
       </Routes>

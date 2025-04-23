@@ -53,20 +53,42 @@ const LoginPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
     
+    // Clear previous errors
+    setErrors({
+      email: '',
+      password: '',
+      general: ''
+    });
+  
+    // Basic validation
+    if (!formData.email) {
+      setErrors(prev => ({ ...prev, email: 'Email is required' }));
+      return;
+    }
+  
+    if (!formData.password) {
+      setErrors(prev => ({ ...prev, password: 'Password is required' }));
+      return;
+    }
+  
+    setIsLoading(true);
+    console.log("Sending login request:", formData);
     try {
       const response = await axios.post('http://localhost:3000/api/v1/user/login', {
         email: formData.email,
         password: formData.password
       });
-
+      console.log("API Response:", response.data);
+  
       // Handle successful login
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token);
         toast.success('Login successful!');
         navigate('/dashboard');
       }
+      setIsLoading(false); // Reset loading state after success
+      
     } catch (error) {
       setIsLoading(false);
       
@@ -76,7 +98,8 @@ const LoginPage = () => {
         if (status === 401) {
           setErrors({
             email: 'Invalid credentials',
-            password: 'Invalid credentials'
+            password: 'Invalid credentials',
+            general: 'Invalid email or password'
           });
           toast.error('Invalid email or password');
         } else if (status === 400) {
