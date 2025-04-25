@@ -2,12 +2,7 @@ import { motion } from "framer-motion";
 import { Bookmark, Edit3, FileText, Home, LayoutDashboard, LogOut, User } from "lucide-react";
 
 const UpdateBlogs = () => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-    className="bg-white rounded-xl shadow-md p-6"
-  >
+ 
  
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -50,7 +45,6 @@ const UpdateBlogs = () => (
     </div>
   </motion.div>
  
-    </motion.div>
 );
 
 export default UpdateBlogs;
