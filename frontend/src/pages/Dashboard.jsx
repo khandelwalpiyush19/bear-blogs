@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { Bookmark, Edit3, FileText, Home, LayoutDashboard, LogOut, User } from "lucide-react";
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const DashboardLayout = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const navigate = useNavigate();
   const sidebarVariants = {
     open: { width: "280px", opacity: 1 },
     closed: { width: "80px", opacity: 1 }
@@ -24,6 +26,17 @@ const DashboardLayout = () => {
     { id: "update", icon: <Bookmark size={20} />, label: "Update Blogs" },
     { id: "profile", icon: <User size={20} />, label: "Profile" }
   ];
+   const logoutHandler = async () =>{
+try {
+  const res = await axios.post('http://localhost:3000/api/v1/user/logout')
+  console.log(res)
+  toast.success("logged out successfully")
+  navigate("/")
+} catch (error) {
+  console.log(error)
+}
+
+   } 
 
   return (
     <div className="flex h-screen bg-amber-50 overflow-hidden">
@@ -88,7 +101,7 @@ const DashboardLayout = () => {
                 Back to Home
               </motion.span>
             </Link>
-            <button className="flex items-center w-full p-3 rounded-lg hover:bg-amber-800">
+            <button onClick={logoutHandler} className="flex items-center w-full p-3 rounded-lg hover:bg-amber-800">
               <LogOut size={20} />
               <motion.span
                 animate={{ opacity: isSidebarOpen ? 1 : 0, x: isSidebarOpen ? 0 : -20 }}
