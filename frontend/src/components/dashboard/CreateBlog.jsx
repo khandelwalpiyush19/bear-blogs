@@ -3,7 +3,6 @@ import { Edit3 } from "lucide-react";
 
 const CreateBlog = () => (
   
-     
   
   <motion.div
     initial={{ opacity: 0, y: 20 }}
